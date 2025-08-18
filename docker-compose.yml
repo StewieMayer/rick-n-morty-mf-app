@@ -1,0 +1,27 @@
+version: '3.9'
+
+services:
+  mf-host:
+    build: ./mf-host
+    ports:
+      - "3000:80"
+    networks:
+      - rnm-network
+
+  mf-character:
+    build: ./mf-character
+    ports:
+      - "3001:80"
+    networks:
+      - rnm-network
+
+  mf-character-details:
+    build: ./mf-character-details
+    ports:
+      - "3002:80"
+    networks:
+      - rnm-network
+
+networks:
+  rnm-network:
+    driver: bridge
