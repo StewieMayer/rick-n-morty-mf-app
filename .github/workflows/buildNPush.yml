@@ -1,0 +1,39 @@
+name: Build and Push Docker Images from Monorepo
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1️⃣ Checkout del monorepo
+      - uses: actions/checkout@v4
+
+      # 2️⃣ Login en GitHub Container Registry
+      - name: Log in to GHCR
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.CR_PAT }}
+
+      # 3️⃣ Build y push de mf-host
+      - name: Build and push mf-host
+        run: |
+          docker build -t ghcr.io/${{ github.repository_owner }}/mf-host:latest ./mf-host
+          docker push ghcr.io/${{ github.repository_owner }}/mf-host:latest
+
+      # 4️⃣ Build y push de mf-character
+      - name: Build and push mf-character
+        run: |
+          docker build -t ghcr.io/${{ github.repository_owner }}/mf-character:latest ./mf-character
+          docker push ghcr.io/${{ github.repository_owner }}/mf-character:latest
+
+      # 5️⃣ Build y push de mf-character-detail
+      - name: Build and push mf-character-detail
+        run: |
+          docker build -t ghcr.io/${{ github.repository_owner }}/mf-character-detail:latest ./mf-character-detail
+          docker push ghcr.io/${{ github.repository_owner }}/mf-character-detail:latest
