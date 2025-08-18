@@ -1,4 +1,4 @@
-import LinkedInLogo from "@images/InBug-white.png";
+import LinkedInLogo from "@images/InBug-White.png";
 import GithubLogo from "@images/github-mark-white.png";
 import { Link } from "react-router-dom";
 
