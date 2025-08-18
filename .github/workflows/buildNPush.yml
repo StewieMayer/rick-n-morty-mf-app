@@ -37,3 +37,18 @@ jobs:
         run: |
           docker build -t ghcr.io/stewiemayer/mf-character-detail:latest ./mf-character-detail
           docker push ghcr.io/stewiemayer/mf-character-detail:latest
+
+      # 6️⃣ Trigger deploy en Render
+      - name: Deploy to Render
+        run: |
+          # Deploy mf-host
+          curl -X POST https://api.render.com/deploy/srv-d2hqjh8dl3ps73aut030 \
+            -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" 
+
+          # Deploy mf-character
+          curl -X POST https://api.render.com/deploy/srv-d2hqk38dl3ps73autjhg \
+            -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}"
+
+          # Deploy mf-character-detail
+          curl -X POST https://api.render.com/deploy/srv-d2hqkd0dl3ps73autus0 \
+            -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}"
