@@ -1,39 +1,40 @@
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ModuleFederationPlugin =
-  require("webpack").container.ModuleFederationPlugin;
-const { dependencies } = require("./package.json");
+  require('webpack').container.ModuleFederationPlugin;
+const { dependencies } = require('./package.json');
+const Dotenv = require('dotenv-webpack');
 
-module.exports = (env, argv) => {
+module.exports = (env) => {
   const isStandalone = env && env.standalone ? true : false;
 
   return {
-    mode: "development",
-    entry: "./src/index.tsx",
+    mode: 'development',
+    entry: './src/index.tsx',
     output: {
-      filename: "bundle.js",
-      path: path.resolve(__dirname, "dist"),
+      filename: 'bundle.js',
+      path: path.resolve(__dirname, 'dist'),
       publicPath: '/',
       clean: true,
     },
     resolve: {
-      extensions: [".ts", ".tsx", ".js", ".jsx"],
+      extensions: ['.ts', '.tsx', '.js', '.jsx'],
       alias: {
-        "@": path.resolve(__dirname, "src"),
-        "@images": path.resolve(__dirname, "src/assets/images"),
-        "@components": path.resolve(__dirname, "src/components"),
-        "@remotes": path.resolve(__dirname, "src/remotes"),
-        "@routes": path.resolve(__dirname, "src/routes"),
-        "@styles": path.resolve(__dirname, "src/styles"),
+        '@': path.resolve(__dirname, 'src'),
+        '@images': path.resolve(__dirname, 'src/assets/images'),
+        '@components': path.resolve(__dirname, 'src/components'),
+        '@remotes': path.resolve(__dirname, 'src/remotes'),
+        '@routes': path.resolve(__dirname, 'src/routes'),
+        '@styles': path.resolve(__dirname, 'src/styles'),
         ...(isStandalone
           ? {
-              "mfCharacters/MfCharacters": path.resolve(
+              'mfCharacters/MfCharacters': path.resolve(
                 __dirname,
-                "src/remotes/StandaloneCharactersApp.tsx"
+                'src/remotes/StandaloneCharactersApp.tsx',
               ),
-              "mfCharacterDetail/MfCharacterDetail": path.resolve(
+              'mfCharacterDetail/MfCharacterDetail': path.resolve(
                 __dirname,
-                "src/remotes/StandAloneCharacterDetailApp.tsx"
+                'src/remotes/StandAloneCharacterDetailApp.tsx',
               ),
             }
           : {}),
@@ -43,33 +44,35 @@ module.exports = (env, argv) => {
       rules: [
         {
           test: /\.(ts|tsx|js|jsx)$/,
-          use: "babel-loader",
+          use: 'babel-loader',
           exclude: /node_modules/,
         },
         {
           test: /\.(css|scss)$/,
-          use: ["style-loader", "css-loader", "postcss-loader"],
+          use: ['style-loader', 'css-loader', 'postcss-loader'],
           exclude: /node_modules/,
         },
         {
           test: /\.(png|svg|jpe?g|gif)$/i,
-          type: "asset/resource",
+          type: 'asset/resource',
         },
       ],
     },
     plugins: [
       new HtmlWebpackPlugin({
-        template: "./public/index.html",
+        template: './public/index.html',
       }),
+      ...(process.env.NODE_ENV !== 'production'
+        ? [new Dotenv({ path: './.env.development' })]
+        : []),
+
       new ModuleFederationPlugin({
-        name: "mf-host",
+        name: 'mf-host',
         remotes: isStandalone
           ? {}
           : {
-              mfCharacters:
-                "mfCharacters@http://localhost:3001/re-mf-characters.js",
-              mfCharacterDetail:
-                "mfCharacterDetail@http://localhost:3002/re-mf-character-detail.js",
+              mfCharacters: `mfCharacters@${process.env.MF_CHARACTER}/re-mf-characters.js`,
+              mfCharacterDetail: `mfCharacterDetail@${process.env.MF_CHARACTER_DETAIL}/re-mf-character-detail.js`,
             },
         shared: {
           react: {
@@ -77,23 +80,23 @@ module.exports = (env, argv) => {
             requiredVersion: dependencies.react,
             eager: true,
           },
-          "react-dom": {
+          'react-dom': {
             singleton: true,
-            requiredVersion: dependencies["react-dom"],
+            requiredVersion: dependencies['react-dom'],
             eager: true,
           },
-          "react-router-dom": { singleton: true, eager: true },
+          'react-router-dom': { singleton: true, eager: true },
         },
       }),
     ],
     devServer: {
-      static: "./dist",
+      static: './dist',
       port: 3000,
       open: true,
       hot: true,
       historyApiFallback: {
         disableDotRule: true,
-        index: "/index.html",
+        index: '/index.html',
       },
     },
   };
