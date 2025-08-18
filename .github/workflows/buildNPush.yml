@@ -23,17 +23,17 @@ jobs:
       # 3️⃣ Build y push de mf-host
       - name: Build and push mf-host
         run: |
-          docker build -t ghcr.io/${{ github.repository_owner | lower }}/mf-host:latest ./mf-host
-          docker push ghcr.io/${{ github.repository_owner | lower }}/mf-host:latest
+          docker build -t ghcr.io/stewiemayer/mf-host:latest ./mf-host
+          docker push ghcr.io/stewiemayer/mf-host:latest
 
       # 4️⃣ Build y push de mf-character
       - name: Build and push mf-character
         run: |
-          docker build -t ghcr.io/${{ github.repository_owner | lower }}/mf-character:latest ./mf-character
-          docker push ghcr.io/${{ github.repository_owner | lower }}/mf-character:latest
+          docker build -t ghcr.io/stewiemayer/mf-character:latest ./mf-character
+          docker push ghcr.io/stewiemayer/mf-character:latest
 
       # 5️⃣ Build y push de mf-character-detail
       - name: Build and push mf-character-detail
         run: |
-          docker build -t ghcr.io/${{ github.repository_owner | lower }}/mf-character-detail:latest ./mf-character-detail
-          docker push ghcr.io/${{ github.repository_owner | lower }}/mf-character-detail:latest
+          docker build -t ghcr.io/stewiemayer/mf-character-detail:latest ./mf-character-detail
+          docker push ghcr.io/stewiemayer/mf-character-detail:latest
