@@ -1,0 +1,68 @@
+{
+  "name": "mf-character-detail",
+  "version": "0.1.0",
+  "main": "index.tsx",
+  "scripts": {
+    "build": "webpack --config webpack.config.js",
+    "start": "webpack serve --config webpack.config.js",
+    "start:standalone": "webpack serve --config webpack.config.js --env standalone=true",
+    "test": "jest",
+    "coverage": "jest --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/StewieMayer/rick-n-morty-mf-app-mf-character-detail.git"
+  },
+  "keywords": [
+    "webpack",
+    "babel",
+    "react",
+    "typescript",
+    "module federation",
+    "jest",
+    "rtl",
+    "rtk",
+    "tailwind",
+    "husky",
+    "eslint",
+    "prettier"
+  ],
+  "author": "Antonio Amaya \"Stewie Mayer\"",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/StewieMayer/rick-n-morty-mf-app-mf-character-detail/issues"
+  },
+  "homepage": "https://github.com/StewieMayer/rick-n-morty-mf-app-mf-character-detail#readme",
+  "description": "",
+  "dependencies": {
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.28.0",
+    "@babel/preset-env": "^7.28.0",
+    "@babel/preset-react": "^7.27.1",
+    "@babel/preset-typescript": "^7.27.1",
+    "@tailwindcss/postcss": "^4.1.11",
+    "@testing-library/jest-dom": "^6.6.4",
+    "@testing-library/react": "^16.3.0",
+    "@types/jest": "^30.0.0",
+    "@types/react": "^19.1.10",
+    "@types/react-dom": "^19.1.7",
+    "babel-jest": "^30.0.5",
+    "babel-loader": "^10.0.0",
+    "css-loader": "^7.1.2",
+    "html-webpack-plugin": "^5.6.3",
+    "jest": "^30.0.5",
+    "jest-environment-jsdom": "^30.0.5",
+    "postcss-loader": "^8.1.1",
+    "style-loader": "^4.0.0",
+    "tailwindcss": "^4.1.11",
+    "ts-jest": "^29.4.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2",
+    "webpack": "^5.101.1",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.2"
+  }
+}
