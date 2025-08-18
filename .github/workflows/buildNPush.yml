@@ -17,7 +17,7 @@ jobs:
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
-          username: ${{ github.actor }}
+          username: ${{StewieMayer}}
           password: ${{ secrets.CR_PAT }}
 
       # 3️⃣ Build y push de mf-host
