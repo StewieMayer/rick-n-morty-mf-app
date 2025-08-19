@@ -8,8 +8,9 @@ const Dotenv = require('dotenv-webpack');
 module.exports = (env) => {
   const isStandalone = env && env.standalone ? true : false;
 
+
   return {
-    mode: 'development',
+    mode: env.NODE_ENV,
     entry: './src/index.tsx',
     output: {
       filename: 'bundle.js',
@@ -59,13 +60,10 @@ module.exports = (env) => {
       ],
     },
     plugins: [
+      new Dotenv({ path: `./.env.${env.NODE_ENV}`, systemvars: true }),
       new HtmlWebpackPlugin({
         template: './public/index.html',
       }),
-      ...(process.env.NODE_ENV !== 'production'
-        ? [new Dotenv({ path: './.env.development' })]
-        : []),
-
       new ModuleFederationPlugin({
         name: 'mf-host',
         remotes: isStandalone
