@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
-RUN npm run webpack --config webpack.config.js --env NODE_ENV=production --env MF_CHARACTER=$MF_CHARACTER --env MF_CHARACTER_DETAIL=$MF_CHARACTER_DETAIL
+RUN npm run build
 
 # NGINX
 FROM nginx:alpine
