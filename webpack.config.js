@@ -3,11 +3,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ModuleFederationPlugin =
   require('webpack').container.ModuleFederationPlugin;
 const { dependencies } = require('./package.json');
-if (process.env.NODE_ENV !== 'production')
-  require('dotenv').config({ path: './.env.development' });
 
 module.exports = (env) => {
   const isStandalone = env && env.standalone ? true : false;
+  
 
   return {
     mode: env.NODE_ENV,
@@ -27,7 +26,7 @@ module.exports = (env) => {
         '@remotes': path.resolve(__dirname, 'src/remotes'),
         '@routes': path.resolve(__dirname, 'src/routes'),
         '@styles': path.resolve(__dirname, 'src/styles'),
-        ...(isStandalone
+        ...(isStandalone || env.MF_CHARACTER || env.MF_CHARACTER_DETAIL
           ? {
               'mfCharacters/MfCharacters': path.resolve(
                 __dirname,
@@ -65,11 +64,11 @@ module.exports = (env) => {
       }),
       new ModuleFederationPlugin({
         name: 'mf-host',
-        remotes: isStandalone
+        remotes: isStandalone || env.MF_CHARACTER || env.MF_CHARACTER_DETAIL
           ? {}
           : {
-              mfCharacters: `mfCharacters@${process.env.MF_CHARACTER}/re-mf-characters.js`,
-              mfCharacterDetail: `mfCharacterDetail@${process.env.MF_CHARACTER_DETAIL}/re-mf-character-detail.js`,
+              mfCharacters: `mfCharacters@${env.MF_CHARACTER}/re-mf-characters.js`,
+              mfCharacterDetail: `mfCharacterDetail@${env.MF_CHARACTER_DETAIL}/re-mf-character-detail.js`,
             },
         shared: {
           react: {
