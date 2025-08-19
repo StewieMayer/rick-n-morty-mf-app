@@ -4,6 +4,9 @@ services:
   mf-host:
     build: 
       context: ./mf-host
+    environment:
+      - MF_CHARACTER
+      - MF_CHRACTER_DETAIL
     ports:
       - "3000:80"
     container_name: mf-host
