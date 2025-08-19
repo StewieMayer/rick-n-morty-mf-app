@@ -3,6 +3,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ModuleFederationPlugin =
   require('webpack').container.ModuleFederationPlugin;
 const { dependencies } = require('./package.json');
+require('dotenv').config({
+  path: ['./.env.development', './.env.production']
+});
 
 module.exports = (env) => {
   const isStandalone = env && env.standalone ? true : false;
@@ -67,9 +70,9 @@ module.exports = (env) => {
           ? {}
           : {
               mfCharacters:
-                'mfCharacters@http://localhost:3001/re-mf-characters.js',
+                `mfCharacters@${process.env.MF_CHARACTER}/re-mf-characters.js`,
               mfCharacterDetail:
-                'mfCharacterDetail@http://localhost:3002/re-mf-character-detail.js',
+                `mfCharacterDetail@${process.env.MF_CHARACTER_DETAIL}/re-mf-character-detail.js`,
             },
         shared: {
           react: {
