@@ -27,7 +27,7 @@ module.exports = (env) => {
         '@remotes': path.resolve(__dirname, 'src/remotes'),
         '@routes': path.resolve(__dirname, 'src/routes'),
         '@styles': path.resolve(__dirname, 'src/styles'),
-        ...(isStandalone || !process.env.MF_CHARACTER || !process.env.MF_CHARACTER_DETAIL
+        ...(isStandalone
           ? {
               'mfCharacters/MfCharacters': path.resolve(
                 __dirname,
@@ -62,28 +62,6 @@ module.exports = (env) => {
     plugins: [
       new HtmlWebpackPlugin({
         template: './public/index.html',
-      }),
-      new ModuleFederationPlugin({
-        name: 'mf-host',
-        remotes: isStandalone || !process.env.MF_CHARACTER || !process.env.MF_CHARACTER_DETAIL
-          ? {}
-          : {
-              mfCharacters: `mfCharacters@${process.env.MF_CHARACTER}/re-mf-characters.js`,
-              mfCharacterDetail: `mfCharacterDetail@${process.env.MF_CHARACTER_DETAIL}/re-mf-character-detail.js`,
-            },
-        shared: {
-          react: {
-            singleton: true,
-            requiredVersion: dependencies.react,
-            eager: true,
-          },
-          'react-dom': {
-            singleton: true,
-            requiredVersion: dependencies['react-dom'],
-            eager: true,
-          },
-          'react-router-dom': { singleton: true, eager: true },
-        },
       }),
     ],
     devServer: {
