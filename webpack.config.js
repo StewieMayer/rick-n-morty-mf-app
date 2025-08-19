@@ -3,8 +3,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ModuleFederationPlugin =
   require('webpack').container.ModuleFederationPlugin;
 const { dependencies } = require('./package.json');
-if (process.env.NODE_ENV !== 'production')
-  require('dotenv').config({ path: './.env.development' });
 
 module.exports = (env) => {
   const isStandalone = env && env.standalone ? true : false;
@@ -62,6 +60,30 @@ module.exports = (env) => {
     plugins: [
       new HtmlWebpackPlugin({
         template: './public/index.html',
+      }),
+      new ModuleFederationPlugin({
+        name: 'mf-host',
+        remotes: isStandalone
+          ? {}
+          : {
+              mfCharacters:
+                'mfCharacters@http://localhost:3001/re-mf-characters.js',
+              mfCharacterDetail:
+                'mfCharacterDetail@http://localhost:3002/re-mf-character-detail.js',
+            },
+        shared: {
+          react: {
+            singleton: true,
+            requiredVersion: dependencies.react,
+            eager: true,
+          },
+          'react-dom': {
+            singleton: true,
+            requiredVersion: dependencies['react-dom'],
+            eager: true,
+          },
+          'react-router-dom': { singleton: true, eager: true },
+        },
       }),
     ],
     devServer: {
