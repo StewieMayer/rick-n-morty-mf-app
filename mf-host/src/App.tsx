@@ -3,6 +3,9 @@ import { BrowserRouter } from "react-router-dom";
 import PublicRoutes from "@routes/PublicRoutes";
 
 const App: React.FC = () => {
+
+  alert(process.env.MF_CHARACTER)
+
   return (
     <BrowserRouter>
       <Layout>
