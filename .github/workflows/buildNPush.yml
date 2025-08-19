@@ -20,37 +20,30 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.CR_PAT }}
 
-      - name: Install docker-compose
-        run: sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-      
-      - name: Set permissions for docker-compose
-        run: sudo chmod +x /usr/local/bin/docker-compose
-
-      #  Build doker-compose
-      - name: Build docker-compose
+      # 3️⃣ Build y push de mf-host
+      - name: Build and push mf-host
         run: |
-          export MF_CHARACTER=${{ secrets.MF_CHARACTER }}
-          export MF_CHRACTER_DETAIL=${{ secrets.MF_CHRACTER_DETAIL }}
-          docker-compose build --no-cache
-
-      - name: Tag
-        run: |    
-          docker -t ghcr.io/stewiemayer/mf-host:latest ./mf-host
-          docker -t ghcr.io/stewiemayer/mf-character:latest ./mf-character
-          docker -t ghcr.io/stewiemayer/mf-character-detail:latest ./mf-character-detail
-
-      - name: Push images to GHCR
-        run: |
+          docker build \
+            --build-arg MF_CHARACTER=${{ secrets.MF_CHARACTER }} \
+            --build-arg MF_CHARACTER_DETAIL=${{ secrets.MF_CHARACTER_DETAIL }} \
+            -t ghcr.io/stewiemayer/mf-host:latest ./mf-host 
           docker push ghcr.io/stewiemayer/mf-host:latest
+
+      # 4️⃣ Build y push de mf-character
+      - name: Build and push mf-character
+        run: |
+          docker build -t ghcr.io/stewiemayer/mf-character:latest ./mf-character
           docker push ghcr.io/stewiemayer/mf-character:latest
+
+      # 5️⃣ Build y push de mf-character-detail
+      - name: Build and push mf-character-detail
+        run: |
+          docker build -t ghcr.io/stewiemayer/mf-character-detail:latest ./mf-character-detail
           docker push ghcr.io/stewiemayer/mf-character-detail:latest
 
       # 6️⃣ Trigger deploy en Render
       - name: Deploy to Render
         run: | 
-          curl -X POST "https://api.render.com/v1/services/${{ secrets.RENDER_HOST }}/deploys" \
-          -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}"
-          curl -X POST "https://api.render.com/v1/services/${{ secrets.RENDER_CHARACTER }}/deploys" \
-          -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}"
-          curl -X POST "https://api.render.com/v1/services/${{ secrets.RENDER_CHARACTER_DETAIL }}/deploys" \
-          -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}"
+          curl -X POST "https://api.render.com/v1/services/${{ secrets.RENDER_HOST_ID }}/deploys" -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" 
+          curl -X POST "https://api.render.com/v1/services/${{ secrets.RENDER_CHARACTER_ID }}/deploys" -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}"
+          curl -X POST "https://api.render.com/v1/services/${{ secrets.RENDER_CHARACTER_DETAIL_ID }}/deploys" -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}"

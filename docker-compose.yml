@@ -2,32 +2,23 @@ version: '3.9'
 
 services:
   mf-host:
-    build: 
-      context: ./mf-host
-    environment:
-      - MF_CHARACTER
-      - MF_CHRACTER_DETAIL
+    build: ./mf-host
     ports:
       - "3000:80"
-    container_name: mf-host
     networks:
       - rnm-network
 
   mf-character:
-    build: 
-      context: ./mf-character
+    build: ./mf-character
     ports:
       - "3001:80"
-    container_name: mf-character
     networks:
       - rnm-network
 
-  mf-character-detail:
-    build: 
-      context: ./mf-character-detail
+  mf-character-details:
+    build: ./mf-character-details
     ports:
       - "3002:80"
-    container_name: mf-character-detail
     networks:
       - rnm-network
 
