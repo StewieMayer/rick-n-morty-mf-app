@@ -20,35 +20,15 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.CR_PAT }}
 
-      - name: Debug secrets
+      #  Build doker-compose
+      - name: Build docker-compose
         run: |
-          echo "MF_CHARACTER: ${{ secrets.MF_CHARACTER }}"
-          echo "MF_CHARACTER_DETAIL: ${{ secrets.MF_CHARACTER_DETAIL}}"
-
-      # 3️⃣ Build y push de mf-host
-      - name: Build and push mf-host
-        run: |
-          docker build \
-            --build-arg MF_CHARACTER=${{ secrets.MF_CHARACTER }} \
-            --build-arg MF_CHARACTER_DETAIL=${{ secrets.MF_CHARACTER_DETAIL }} \
-            -t ghcr.io/stewiemayer/mf-host:latest ./mf-host 
-          docker push ghcr.io/stewiemayer/mf-host:latest
-
-      # 4️⃣ Build y push de mf-character
-      - name: Build and push mf-character
-        run: |
-          docker build -t ghcr.io/stewiemayer/mf-character:latest ./mf-character
-          docker push ghcr.io/stewiemayer/mf-character:latest
-
-      # 5️⃣ Build y push de mf-character-detail
-      - name: Build and push mf-character-detail
-        run: |
-          docker build -t ghcr.io/stewiemayer/mf-character-detail:latest ./mf-character-detail
-          docker push ghcr.io/stewiemayer/mf-character-detail:latest
+          docker-compose down --rmi all --volumes --remove-orphans
+          docker-compose build --no-cache
+          docker push ghcr.io/stewiemayer/rick-n-morty-mf-app:latest
 
       # 6️⃣ Trigger deploy en Render
       - name: Deploy to Render
         run: | 
-          curl -X POST "https://api.render.com/v1/services/${{ secrets.RENDER_HOST_ID }}/deploys" -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" 
-          curl -X POST "https://api.render.com/v1/services/${{ secrets.RENDER_CHARACTER_ID }}/deploys" -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}"
-          curl -X POST "https://api.render.com/v1/services/${{ secrets.RENDER_CHARACTER_DETAIL_ID }}/deploys" -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}"
+          curl -X POST "https://api.render.com/v1/services/${{ secrets.RENDER_RICK_N_MORTY }}/deploys" \
+          -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}"
