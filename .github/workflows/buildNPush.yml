@@ -20,13 +20,18 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.CR_PAT }}
 
+      - name: Debug secrets
+        run: |
+          echo "MF_CHARACTER: ${{ secrets.MF_CHARACTER }}"
+          echo "MF_CHARACTER_DETAIL: ${{ secrets.MF_CHARACTER_DETAIL}}"
+
       # 3️⃣ Build y push de mf-host
       - name: Build and push mf-host
         run: |
           docker build \
             --build-arg MF_CHARACTER=${{ secrets.MF_CHARACTER }} \
             --build-arg MF_CHARACTER_DETAIL=${{ secrets.MF_CHARACTER_DETAIL }} \
-            -t ghcr.io/stewiemayer/mf-host:latest ./mf-host \
+            -t ghcr.io/stewiemayer/mf-host:latest ./mf-host 
           docker push ghcr.io/stewiemayer/mf-host:latest
 
       # 4️⃣ Build y push de mf-character
