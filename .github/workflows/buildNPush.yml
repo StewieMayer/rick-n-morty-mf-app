@@ -30,6 +30,7 @@ jobs:
       - name: Build docker-compose
         run: |
           docker-compose build --no-cache
+          docker tag rick-n-morty-mf-app ghcr.io/stewiemayer/rick-n-morty-mf-app:latest
           docker push ghcr.io/stewiemayer/rick-n-morty-mf-app:latest
 
       # 6️⃣ Trigger deploy en Render
