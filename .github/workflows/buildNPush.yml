@@ -35,9 +35,9 @@ jobs:
 
       - name: Tag
         run: |    
-          docker tag mf-host ghcr.io/stewiemayer/mf-host:latest
-          docker tag mf-character ghcr.io/stewiemayer/mf-character:latest
-          docker tag mf-character-detail ghcr.io/stewiemayer/mf-character-detail:latest
+          docker -t ghcr.io/stewiemayer/mf-host:latest ./mf-host
+          docker -t ghcr.io/stewiemayer/mf-character:latest ./mf-character
+          docker -t ghcr.io/stewiemayer/mf-character-detail:latest ./mf-character-detail
 
       - name: Push images to GHCR
         run: |
