@@ -49,6 +49,6 @@ jobs:
       # 6️⃣ Trigger deploy en Render
       - name: Deploy to Render
         run: | 
-          curl -X POST "https://api.render.com/deploy/${{ secrets.RENDER_HOST_ID }}" -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" 
-          curl -X POST "https://api.render.com/deploy/${{ secrets.RENDER_CHARACTER_ID }}" -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}"
-          curl -X POST "https://api.render.com/deploy/${{ secrets.RENDER_CHARACTER_DETAIL_ID }}" -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}"
+          curl -X POST "https://api.render.com/v1/services/${{ secrets.RENDER_HOST_ID }}/deploys" -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" 
+          curl -X POST "https://api.render.com/v1/services/${{ secrets.RENDER_CHARACTER_ID }}/deploys" -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}"
+          curl -X POST "https://api.render.com/v1/services/${{ secrets.RENDER_CHARACTER_DETAIL_ID }}/deploys" -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}"
