@@ -3,11 +3,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ModuleFederationPlugin =
   require('webpack').container.ModuleFederationPlugin;
 const { dependencies } = require('./package.json');
-const Dotenv = require('dotenv-webpack');
+if (process.env.NODE_ENV !== 'production')
+  require('dotenv').config({ path: './.env.development' });
 
 module.exports = (env) => {
   const isStandalone = env && env.standalone ? true : false;
-
 
   return {
     mode: env.NODE_ENV,
@@ -60,7 +60,6 @@ module.exports = (env) => {
       ],
     },
     plugins: [
-      new Dotenv({ path: `./.env.${env.NODE_ENV}`, systemvars: true }),
       new HtmlWebpackPlugin({
         template: './public/index.html',
       }),
