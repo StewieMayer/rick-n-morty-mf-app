@@ -40,15 +40,7 @@ jobs:
 
       # 6️⃣ Trigger deploy en Render
       - name: Deploy to Render
-        run: |
-          # Deploy mf-host
-          curl -X POST https://api.render.com/deploy/srv-d2hqjh8dl3ps73aut030 \
-            -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" 
-
-          # Deploy mf-character
-          curl -X POST https://api.render.com/deploy/srv-d2hqk38dl3ps73autjhg \
-            -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}"
-
-          # Deploy mf-character-detail
-          curl -X POST https://api.render.com/deploy/srv-d2hqkd0dl3ps73autus0 \
-            -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}"
+        run: | 
+          curl -X POST "https://api.render.com/deploy/${{ secrets.RENDER_HOST_ID }}" -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" 
+          curl -X POST "https://api.render.com/deploy/${{ secrets.RENDER_CHARACTER_ID }}" -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}"
+          curl -X POST "https://api.render.com/deploy/${{ secrets.RENDER_CHARACTER_DETAIL_ID }}" -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}"
