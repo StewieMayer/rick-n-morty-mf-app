@@ -3,12 +3,17 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ModuleFederationPlugin =
   require('webpack').container.ModuleFederationPlugin;
 const { dependencies } = require('./package.json');
-require('dotenv').config({
-  path: ['./.env.development', './.env.production']
-});
+const dotEnv = require('dotenv');
+const fs = require('fs');
+
+if (fs.existsSync('./.env.development'))
+  dotEnv.config({
+    path: './.env.development',
+  });
 
 module.exports = (env) => {
   const isStandalone = env && env.standalone ? true : false;
+  console.log({ env: process.env });
 
   return {
     mode: env.NODE_ENV,
@@ -69,10 +74,8 @@ module.exports = (env) => {
         remotes: isStandalone
           ? {}
           : {
-              mfCharacters:
-                `mfCharacters@${process.env.MF_CHARACTER}/re-mf-characters.js`,
-              mfCharacterDetail:
-                `mfCharacterDetail@${process.env.MF_CHARACTER_DETAIL}/re-mf-character-detail.js`,
+              mfCharacters: `mfCharacters@${process.env.MF_CHARACTER}/re-mf-characters.js`,
+              mfCharacterDetail: `mfCharacterDetail@${process.env.MF_CHARACTER_DETAIL}/re-mf-character-detail.js`,
             },
         shared: {
           react: {

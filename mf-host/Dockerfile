@@ -9,7 +9,6 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
-RUN echo "MF_CHARACTER=$MF_CHARACTER\nMF_CHARACTER_DETAIL=$MF_CHARACTER_DETAIL" > /app/.env.production
 RUN npm run build
 
 # NGINX
