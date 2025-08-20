@@ -13,10 +13,9 @@ if (fs.existsSync('./.env.development'))
 
 module.exports = (env) => {
   const isStandalone = env && env.standalone ? true : false;
-  console.log({ env: process.env });
 
   return {
-    mode: env.NODE_ENV,
+    mode: 'development',
     entry: './src/index.tsx',
     output: {
       filename: 'bundle.js',
