@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack serve --config webpack.config.js --env NODE_ENV=development",
     "start:standalone": "webpack serve --config webpack.config.js --env standalone=true, NODE_ENV=development",
-    "build": "webpack --config webpack.config.js --env NODE_ENV=production",
+    "build": "webpack --config webpack.config.js --env NODE_ENV=production --env standalone=true",
     "test": "jest",
     "coverage": "jest --coverage"
   },
