@@ -5,8 +5,8 @@ export const charactersApi = createApi({
   reducerPath: "charactersApi",
   baseQuery: fetchBaseQuery({ baseUrl: "https://rickandmortyapi.com/api/" }),
   endpoints: (builder) => ({
-    getCharacters: builder.query<ResultData, CharactersApiProps>({
-      query: ({ page = 1, name, species, status }) => ({
+    getCharacters: builder.mutation<ResultData, CharactersApiProps>({
+      query: ({ page = 1, name="", species="", status="" }) => ({
         url: "character/",
         params: {
           page,
@@ -20,4 +20,4 @@ export const charactersApi = createApi({
   }),
 });
 
-export const { useGetCharactersQuery } = charactersApi;
+export const { useGetCharactersMutation } = charactersApi;

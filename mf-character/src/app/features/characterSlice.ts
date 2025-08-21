@@ -3,10 +3,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
 const initialState: CharactersPageState = {
-  page: 1,
-  name: undefined,
-  species: undefined,
-  status: undefined,
+  count: 0,
+  pages: 0,
+  next: null,
+  prev: null,
+  loading: false,
+  error: null,
+  characters: [],
   currentCharacter: null,
   isModalOpen: false,
 };
@@ -15,29 +18,51 @@ export const characterSlice = createSlice({
   name: "character",
   initialState,
   reducers: {
-    setPage: (state, action: PayloadAction<number>) => {
-      state.page = action.payload;
+    setCount: (state, action: PayloadAction<number>) => {
+      state.count = action.payload;
     },
-    setName: (state, action: PayloadAction<string>) => {
-      state.name = action.payload;
+    setPages: (state, action: PayloadAction<number>) => {
+      state.pages = action.payload;
     },
-    setSpecies: (state, action: PayloadAction<string>) => {
-      state.species = action.payload;
+    setNext: (state, action: PayloadAction<string | null>) => {
+      state.next = action.payload;
     },
-    setStatus: (state, action: PayloadAction<string>) => {
-      state.status = action.payload;
+    setPrev: (state, action: PayloadAction<string | null>) => {
+      state.prev = action.payload;
+    },
+    setLoading: (state, action: PayloadAction<boolean>) => {
+      state.loading = action.payload;
+    },
+    setError: (state, action: PayloadAction<string>) => {
+      state.error = action.payload;
+    },
+    setCharacters: (state, action: PayloadAction<Character[]>) => {
+      state.characters = action.payload;
     },
     setCurrentCharacter: (state, action: PayloadAction<Character | null>) => {
       state.currentCharacter = action.payload;
     },
-    setIsModalOpen: (state,action: PayloadAction<boolean>) =>{
+    setIsModalOpen: (state, action: PayloadAction<boolean>) => {
       state.isModalOpen = action.payload;
-    }
+    },
+    clearState: (state) => {
+      state = initialState;
+    },
   },
 });
 
-export const { setName, setPage, setSpecies, setStatus, setCurrentCharacter, setIsModalOpen } =
-  characterSlice.actions;
+export const {
+  setCount,
+  setPages,
+  setNext,
+  setPrev,
+  setLoading,
+  setError,
+  setCharacters,
+  setCurrentCharacter,
+  setIsModalOpen,
+  clearState,
+} = characterSlice.actions;
 export const selectCharacter = (state: RootState): CharactersPageState =>
   state.character;
 export default characterSlice.reducer;
