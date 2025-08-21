@@ -15,8 +15,8 @@ const CharacterForm: React.FC = () => {
 
   return (
     <form onSubmit={submit} className="container p-4 pb-0 flex justify-center">
-      <fieldset className="container mx-auto lg:w-10/12 xl:w-3xl flex border-2 border-gray-300 rounded-xl p-4 pt-2 bg-white">
-        <legend className="text-xl text-gray-600 font-bold">Filtrar</legend>
+      <fieldset className="container mx-auto shadow-2xl box-border lg:w-10/12 xl:w-3xl flex border-2 border-gray-300 rounded-xl p-4 pt-2 bg-white">
+        <legend className="text-xl text-gray-600 text-shadow-2xs font-bold">Filtrar</legend>
         <div className="flex flex-col md:flex-row gap-4 w-full">
           <div className="flex flex-col w-full md:w-1/4">
             <label

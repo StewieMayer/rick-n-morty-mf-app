@@ -10,7 +10,7 @@ const CharacterContainer: React.FC = () => {
     useCharacterContainer();
 
   return (
-    <div className="flex flex-wrap items-center justify-center gap-4 p-4">
+    <div className="flex flex-1 flex-wrap overflow-hidden items-center justify-center gap-4 p-4">
       {loading ? (
         <Loader />
       ) : (
