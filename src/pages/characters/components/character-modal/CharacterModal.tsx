@@ -33,7 +33,7 @@ const CharacterModal: React.FC<CharacterModalProps> = ({
           transition
         >
           {character && (
-              <CharacterCard character={character} size="4xl" full /> 
+              <CharacterCard character={character} size="3xl" full /> 
           )}
         </Modal.Panel>
       </div>

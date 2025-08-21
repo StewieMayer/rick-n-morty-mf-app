@@ -31,7 +31,7 @@ export const useCharacterCard = ({
   const baseClass =
     "rounded-xl overflow-hidden bg-white border-2 border-gray-300 shadow-xl box-border";
   const flexClass = "flex flex-col md:flex-row";
-  const sizeClass = `sm:w-100 md:w-full lg:w-${size}`;
+  const sizeClass = `sm:w-100 md:w-full ${full ? "lg:w-3xl" : "lg:w-md"}`;
   const hover = "hover:scale-105 hover:cursor-pointer";
 
   const cardClass = `${baseClass} ${flexClass} ${sizeClass} ${!full && hover}`;
