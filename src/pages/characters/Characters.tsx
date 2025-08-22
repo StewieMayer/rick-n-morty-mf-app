@@ -1,4 +1,4 @@
-import CharacterPaginator from "@/components/character-paginator/CharacterPaginator";
+import CharacterPaginator from "./components/character-paginator/CharacterPaginator";
 import CharacterContainer from "./components/character-container/CharacterContainer";
 import CharacterForm from "./components/character-form/CharacterForm";
 
