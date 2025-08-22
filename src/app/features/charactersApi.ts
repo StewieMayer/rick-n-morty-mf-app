@@ -6,13 +6,22 @@ export const charactersApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "https://rickandmortyapi.com/api/" }),
   endpoints: (builder) => ({
     getCharacters: builder.mutation<ResultData, CharactersApiProps>({
-      query: ({ page = 1, name="", species="", status="" }) => ({
+      query: ({
+        page = 1,
+        name = "",
+        species = "",
+        status = "",
+        gender = "",
+        type = "",
+      }) => ({
         url: "character/",
         params: {
           page,
           name,
           species,
           status,
+          gender,
+          type,
         },
         method: "GET",
       }),

@@ -1,4 +1,5 @@
 import useDispatchHandler from "@/hooks/useDispatchHandler";
+import { CharacterGender, CharacterStatus } from "@/types/characterTypes";
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
@@ -8,6 +9,8 @@ const useCharacterForm = () => {
   const [name, setName] = useState<string>("");
   const [species, setSpecies] = useState<string>("");
   const [status, setStatus] = useState<string>("");
+  const [gender, setGender] = useState<string>("");
+  const [type, setType] = useState<string>("");
 
   //Usefull hooks
   const [params, setParams] = useSearchParams();
@@ -20,6 +23,10 @@ const useCharacterForm = () => {
     setSpecies(e.target.value);
   const handleChangeStatus = (e: React.ChangeEvent<HTMLSelectElement>) =>
     setStatus(e.target.value);
+  const handleChangeGender = (e: React.ChangeEvent<HTMLSelectElement>) =>
+    setGender(e.target.value);
+  const handleChangeType = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setType(e.target.value);
 
   const callback = () => {
     if (name) params.set("name", name);
@@ -28,13 +35,19 @@ const useCharacterForm = () => {
     else params.delete("species");
     if (status) params.set("status", status);
     else params.delete("status");
-    if(status || species || name) params.set("page", "1");
+    if (gender) params.set("gender", gender);
+    else params.delete("gender");
+    if (type) params.set("type", type);
+    else params.delete("type");
+    if (status || species || name || gender || type) params.set("page", "1");
     else params.delete("page");
     setParams(params);
 
     setName("");
     setSpecies("");
     setStatus("");
+    setGender("");
+    setType("");
   };
 
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -42,7 +55,7 @@ const useCharacterForm = () => {
     setIsLoading((prev) => !prev);
 
     handleDispatch({
-      params: { name, species, status, page: 1 },
+      params: { page: 1, name, species, status, gender, type },
       callback,
     });
 
@@ -53,10 +66,14 @@ const useCharacterForm = () => {
     name,
     species,
     status,
+    gender,
+    type,
     isLoading,
     handleChangeName,
     handleChangeSpecies,
     handleChangeStatus,
+    handleChangeGender,
+    handleChangeType,
     submit,
   };
 };

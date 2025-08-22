@@ -30,15 +30,20 @@ export type ResultData = {
   results: Array<Character>;
 };
 
+export type CharacterGender = "female" | "male" | "genderless" | "unknown";
+export type CharacterStatus = "alive" | "dead" | "unknown";
+
 export interface CharactersApiProps {
   page?: number;
   name?: string;
-  status?: string;
+  status?: CharacterStatus | string;
   species?: string;
+  gender?: CharacterGender | string;
+  type?: string;
 }
 
 export interface CharactersPageState {
-  page:number;
+  page: number;
   count: number;
   pages: number;
   next: string | null;
