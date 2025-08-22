@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
 const initialState: CharactersPageState = {
+  page:1,
   count: 0,
   pages: 0,
   next: null,
@@ -18,6 +19,9 @@ export const characterSlice = createSlice({
   name: "character",
   initialState,
   reducers: {
+    setPage(state,action:PayloadAction<number>){
+      state.page = action.payload
+    },
     setCount: (state, action: PayloadAction<number>) => {
       state.count = action.payload;
     },
@@ -52,6 +56,7 @@ export const characterSlice = createSlice({
 });
 
 export const {
+  setPage,
   setCount,
   setPages,
   setNext,

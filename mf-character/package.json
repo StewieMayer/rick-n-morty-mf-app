@@ -1,6 +1,6 @@
 {
   "name": "mf-character",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "main": "index.tsx",
   "keywords": [
     "webpack",
@@ -36,6 +36,7 @@
     "@babel/preset-react": "^7.27.1",
     "@babel/preset-typescript": "^7.27.1",
     "@headlessui/react": "^2.2.7",
+    "@heroicons/react": "^2.2.0",
     "@reduxjs/toolkit": "^2.8.2",
     "@tailwindcss/postcss": "^4.1.11",
     "@testing-library/jest-dom": "^6.6.4",

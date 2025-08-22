@@ -38,6 +38,7 @@ export interface CharactersApiProps {
 }
 
 export interface CharactersPageState {
+  page:number;
   count: number;
   pages: number;
   next: string | null;
