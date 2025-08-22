@@ -6,6 +6,7 @@ import {
   setError,
   setLoading,
   setNext,
+  setPage,
   setPages,
   setPrev,
 } from "@/app/features/characterSlice";
@@ -44,6 +45,8 @@ const useCharacterForm = () => {
     setName("");
     setSpecies("");
     setStatus("");
+    params.delete("page");
+    setParams(params)
   };
 
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -53,6 +56,7 @@ const useCharacterForm = () => {
     getCharacters({ name, species, status })
       .unwrap()
       .then(({ info: { count, pages, next, prev }, results }) => {
+        dispatch(setPage(1))
         dispatch(setCount(count));
         dispatch(setPages(pages));
         dispatch(setNext(next));
