@@ -29,12 +29,12 @@ const useCharacterPaginator = () => {
   const handleNavigation = (page: number) => {
     if (!page || page < 1 || page > pages) return;
 
-    const apiParams: Record<string, string | number> = { page };
+    const apiParams: Record<string, string | number> = {page};
+    params.forEach((value, key) => {
+      if(key!=="page") apiParams[key] = value;
+    });
 
     dispatch(setLoading(true));
-    params.forEach((value, key) => {
-      apiParams[key] = value;
-    });
 
     getCharacters({ ...apiParams })
       .unwrap()
@@ -45,13 +45,13 @@ const useCharacterPaginator = () => {
         dispatch(setNext(next));
         dispatch(setPrev(prev));
         dispatch(setCharacters(results));
+        params.set("page", String(page));
+        setParams(params);
+        setCurrentPage(page);
       })
       .catch((error) => dispatch(setError(error.message)))
       .finally(() => {
         dispatch(setLoading(false));
-        params.set("page", String(page));
-        setParams(params);
-        setCurrentPage(page);
       });
   };
 
