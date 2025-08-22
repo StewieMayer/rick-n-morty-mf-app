@@ -34,6 +34,7 @@ const useDispatchHandler = () => {
     dispatch(setCurrentCharacter(null));
     dispatch(setIsModalOpen(false));
     dispatch(setCharacters([]));
+    dispatch(setPage(1))
 
     getCharacters({ ...params })
       .unwrap()
