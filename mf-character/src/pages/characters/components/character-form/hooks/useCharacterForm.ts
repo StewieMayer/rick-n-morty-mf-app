@@ -1,29 +1,19 @@
-import { useGetCharactersMutation } from "@/app/features/charactersApi";
-import {
-  clearState,
-  setCharacters,
-  setCount,
-  setError,
-  setLoading,
-  setNext,
-  setPage,
-  setPages,
-  setPrev,
-} from "@/app/features/characterSlice";
-import { useAppDispatch } from "@/app/features/hooks";
-import React, { useState } from "react";
+import useDispatchHandler from "@/hooks/useDispatchHandler";
+import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 const useCharacterForm = () => {
+  //Form state
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [name, setName] = useState<string>("");
   const [species, setSpecies] = useState<string>("");
   const [status, setStatus] = useState<string>("");
+
+  //Usefull hooks
   const [params, setParams] = useSearchParams();
+  const { handleDispatch } = useDispatchHandler();
 
-  const [getCharacters, { isLoading, isError }] = useGetCharactersMutation();
-
-  const dispatch = useAppDispatch();
-
+  //Handlers
   const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>) =>
     setName(e.target.value);
   const handleChangeSpecies = (e: React.ChangeEvent<HTMLInputElement>) =>
@@ -31,46 +21,32 @@ const useCharacterForm = () => {
   const handleChangeStatus = (e: React.ChangeEvent<HTMLSelectElement>) =>
     setStatus(e.target.value);
 
-  const handleSetParams = () => {
+  const callback = () => {
     if (name) params.set("name", name);
     else params.delete("name");
     if (species) params.set("species", species);
     else params.delete("species");
     if (status) params.set("status", status);
     else params.delete("status");
+    if(status || species || name) params.set("page", "1");
+    else params.delete("page");
     setParams(params);
-  };
 
-  const clearForm = () => {
     setName("");
     setSpecies("");
     setStatus("");
-    params.delete("page");
-    setParams(params)
   };
 
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsLoading((prev) => !prev);
 
-    dispatch(setLoading(true));
-    getCharacters({ name, species, status })
-      .unwrap()
-      .then(({ info: { count, pages, next, prev }, results }) => {
-        dispatch(setPage(1))
-        dispatch(setCount(count));
-        dispatch(setPages(pages));
-        dispatch(setNext(next));
-        dispatch(setPrev(prev));
-        dispatch(setCharacters(results));
-        handleSetParams();
-        clearForm();
-      })
-      .catch((error) => {
-        dispatch(clearState());
-        dispatch(setCharacters([]));
-        dispatch(setError(error.message));
-      })
-      .finally(() => dispatch(setLoading(false)));
+    handleDispatch({
+      params: { name, species, status, page: 1 },
+      callback,
+    });
+
+    setIsLoading((prev) => !prev);
   };
 
   return {
