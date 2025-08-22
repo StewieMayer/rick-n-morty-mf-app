@@ -1,6 +1,6 @@
 {
   "name": "mf-character",
-  "version": "0.7.3",
+  "version": "0.8.0",
   "main": "index.tsx",
   "keywords": [
     "webpack",
