@@ -14,8 +14,8 @@ const CharacterPaginator: React.FC = () => {
   } = useCharacterPaginator();
 
   return (
-    <nav className="flex justify-center items-center w-full">
-      <ul className="flex rounded-full items-center border-2 border-gray-300 space-x-3 shadow-2xl p-1">
+    <nav className="flex w-full justify-center items-center p-2">
+      <ul className="flex rounded-full items-center justify-between border-2 border-gray-300 gap-2 shadow-2xl p-1">
         <li>
           <Button
             onClick={handlePrevPage}
@@ -26,20 +26,20 @@ const CharacterPaginator: React.FC = () => {
           </Button>
         </li>
         <li>
-          <div className="flex justify-center items-center space-x-2 font-bold text-gray-500">
+          <div className="flex w-fit justify-center items-center gap-2 font-bold text-gray-500">
             <label>Página</label>
             <Input
               type="number"
               value={currentPage}
               onChange={handleChangePage}
-              className="w-16 text-center focus:outline-none focus:border-2 focus:border-blue-500  focus:text-blue-500 rounded-xl p-1 "
+              className="w-8 sm:w-16 text-center focus:outline-none focus:border-2 focus:border-blue-500  focus:text-blue-500 rounded-xl p-1 "
             />
             <label>de</label>
             <Input
               type="number"
               value={pages}
               readOnly
-              className="w-16 text-center focus:outline-none "
+              className="w-8 sm:w-16 text-center focus:outline-none "
             />
           </div>
         </li>
