@@ -1,11 +1,15 @@
-const Loader: React.FC = () => {
+import LoadingImg from "@images/loader.png"
+
+interface LoaderProps {
+  message?: string
+}
+
+const Loader: React.FC<LoaderProps> = ({message}) => {
   return (
-    <div className="flex flex-1 w-full justify-center items-center">
-      <div className="flex flex-col items-center shadow-2xl p-12 bg-white rounded animate-bounce">
-        <div className="w-16 h-16 border-6 border-black/30 border-t-gray-600 rounded-full animate-spin"></div>
-        <p className="text-gray-600 font-bold mt-2">Cargando...</p>
+      <div className="flex flex-col items-center p-12 gap-2">
+        <img src={LoadingImg} className="w-50 h-50 animate-[spin_1.3s_linear_infinite]" />
+        <p className="text-2xl text-gray-600 font-bold">{message}</p>
       </div>
-    </div>
   );
 };
 
