@@ -1,5 +1,3 @@
-import useDispatchHandler from "@/hooks/useDispatchHandler";
-import { CharacterGender, CharacterStatus } from "@/types/characterTypes";
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
@@ -14,7 +12,6 @@ const useCharacterForm = () => {
 
   //Usefull hooks
   const [params, setParams] = useSearchParams();
-  const { handleDispatch } = useDispatchHandler();
 
   //Handlers
   const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>) =>
@@ -28,36 +25,25 @@ const useCharacterForm = () => {
   const handleChangeType = (e: React.ChangeEvent<HTMLInputElement>) =>
     setType(e.target.value);
 
-  const callback = () => {
-    if (name) params.set("name", name);
-    else params.delete("name");
-    if (species) params.set("species", species);
-    else params.delete("species");
-    if (status) params.set("status", status);
-    else params.delete("status");
-    if (gender) params.set("gender", gender);
-    else params.delete("gender");
-    if (type) params.set("type", type);
-    else params.delete("type");
-    if (status || species || name || gender || type) params.set("page", "1");
-    else params.delete("page");
-    setParams(params);
+  const submit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsLoading((prev) => !prev);
+
+    const newParams: Record<string, string> = {};
+
+    if (name) newParams["name"] = name;
+    if (species) newParams["species"] = species
+    if (status) newParams["status"]= status
+    if (gender) newParams["gender"] =gender
+    if (type) newParams["type"]= type
+
+    setParams(newParams);
 
     setName("");
     setSpecies("");
     setStatus("");
     setGender("");
     setType("");
-  };
-
-  const submit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsLoading((prev) => !prev);
-
-    handleDispatch({
-      params: { page: 1, name, species, status, gender, type },
-      callback,
-    });
 
     setIsLoading((prev) => !prev);
   };
