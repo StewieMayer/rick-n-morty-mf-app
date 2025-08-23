@@ -4,24 +4,24 @@ import CharacterCard from "../character-card/CharacterCard";
 import CharacterModal from "../character-modal/CharacterModal";
 import customKey from "@/utils/customKey";
 import Loader from "@/components/Loader";
+import CharacterEmpty from "../character-empty/CharacterEmpty";
 
 const CharacterContainer: React.FC = () => {
-  const { characters, isModalOpen, currentCharacter, loading, onClose } =
+  const { characters, isModalOpen, currentCharacter, loading, error, onClose } =
     useCharacterContainer();
 
   return (
     <div className="flex flex-1 flex-wrap overflow-hidden items-center justify-center gap-4 p-4">
-      {loading ? (
-        <Loader />
-      ) : (
-        characters &&
+      {loading && <Loader />}
+      {error && <CharacterEmpty />}
+
+      {characters &&
         characters.map((character: Character) => (
           <CharacterCard
             character={character}
             key={customKey([character.id, character.name])}
           />
-        ))
-      )}
+        ))}
       <CharacterModal
         open={isModalOpen}
         onClose={onClose}
