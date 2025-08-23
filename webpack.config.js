@@ -20,6 +20,7 @@ module.exports = (env) => {
       alias: {
         "@": path.resolve(__dirname, "src"),
         "@components": path.resolve(__dirname, "src/components"),
+        "@images": path.resolve(__dirname, "src/assets/images"),
       },
     },
     module: {
@@ -34,6 +35,10 @@ module.exports = (env) => {
           use: ["style-loader", "css-loader", "postcss-loader"],
           exclude: /node_modules/,
         },
+        {
+          test: /\.(png|svg|jpe?g|gif)$/i,
+          type: 'asset/resource',
+        }
       ],
     },
     plugins: [

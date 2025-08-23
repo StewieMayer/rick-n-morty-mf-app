@@ -1,6 +1,7 @@
 import { Button, Input } from "@headlessui/react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import useCharacterForm from "./hooks/useCharacterForm";
+import CharacterField from "./components/CharacterField";
 
 const CharacterForm: React.FC = () => {
   const {
@@ -18,91 +19,85 @@ const CharacterForm: React.FC = () => {
     submit,
   } = useCharacterForm();
 
+  const fieldClassNames =
+    "bg-white w-full rounded-xl border-2 border-gray-300 py-1 px-2 font-bold text-gray-500 focus:outline-none focus:border-blue-300";
+
   return (
     <form
       onSubmit={submit}
-      className="flex w-full bg-gray-700 text-gray-400 px-4 pb-0 items-center justify-end lg:justify-center"
+      className="flex w-full bg-gray-700 text-gray-300 p-4 pt-3 items-center justify-center"
     >
-      <fieldset className="flex w-1/2 p-4 space-x-2 items-end">
-        <div className="flex flex-col">
-          <label htmlFor="name" className="block text-sm/6 font-medium  px-1">
-            Nombre:
-          </label>
-          <Input
-            id="name"
-            type="text"
-            value={name}
-            onChange={handleChangeName}
-            className="border-2 bg-white border-gray-300 focus:outline-none focus:border-blue-300 rounded-xl py-1 px-2 font-bold text-gray-500"
-          />
+      <fieldset className="flex flex-wrap md:flex-nowrap gap-2 items-center justify-center">
+        <div className="flex w-full md:w-1/2 gap-2">
+          <CharacterField label="Nombre:" htmlFor="name">
+            <Input
+              id="name"
+              type="text"
+              value={name}
+              onChange={handleChangeName}
+              className={fieldClassNames}
+            />
+          </CharacterField>
+
+          <CharacterField label="Genero:" htmlFor="gender">
+            <select
+              id="gender"
+              value={gender}
+              onChange={handleChangeGender}
+              className={fieldClassNames}
+            >
+              <option value=""></option>
+              <option value="male">Hombre</option>
+              <option value="female">Mujer</option>
+              <option value="genderless">Sin genero</option>
+              <option value="unknown">Desconocido</option>
+            </select>
+          </CharacterField>
+
+          <CharacterField label="Especie:" htmlFor="species">
+            <Input
+              id="species"
+              type="text"
+              value={species}
+              onChange={handleChangeSpecies}
+              className={fieldClassNames}
+            />
+          </CharacterField>
         </div>
-        <div className="flex flex-col">
-          <label htmlFor="gender" className="block text-sm/6 font-medium  px-1">
-            Genero:
-          </label>
-          <select
-            id="gender"
-            value={gender}
-            onChange={handleChangeGender}
-            className="border-2 bg-white border-gray-300 focus:outline-none focus:border-blue-300 rounded-xl py-1 px-2 font-bold text-gray-500"
+
+        <div className="flex w-full md:w-fit gap-2 items-end">
+          <CharacterField label="Tipo:" htmlFor="type">
+            <Input
+              id="type"
+              type="text"
+              value={type}
+              onChange={handleChangeType}
+              className={fieldClassNames}
+            />
+          </CharacterField>
+
+          <CharacterField label="Estado:" htmlFor="status">
+            <select
+              id="status"
+              value={status}
+              onChange={handleChangeStatus}
+              className={fieldClassNames}
+            >
+              <option value=""></option>
+              <option value="alive">Vivo</option>
+              <option value="dead">Muerto</option>
+              <option value="unknown">Desconocida</option>
+            </select>
+          </CharacterField>
+
+          <Button
+            disabled={isLoading}
+            type="submit"
+            className="w-1/3 md:w-9 h-9 flex items-center justify-center rounded-xl cursor-pointer bg-blue-500 text-white font-bold disabled:bg-blue-300 disabled:cursor-not-allowed hover:bg-blue-600 transition-colors"
           >
-            <option value=""></option>
-            <option value="male">Hombre</option>
-            <option value="female">Mujer</option>
-            <option value="genderless">Sin genero</option>
-            <option value="unknown">Desconocido</option>
-          </select>
+            <MagnifyingGlassIcon className="size-6" />
+          </Button>
         </div>
-        <div className="flex flex-col">
-          <label
-            htmlFor="species"
-            className="block text-sm/6 font-medium  px-1"
-          >
-            Especie:
-          </label>
-          <Input
-            id="species"
-            type="text"
-            value={species}
-            onChange={handleChangeSpecies}
-            className="border-2 bg-white border-gray-300 focus:outline-none focus:border-blue-300 rounded-xl py-1 px-2 font-bold text-gray-500"
-          />
-        </div>
-        <div className="flex flex-col">
-          <label htmlFor="type" className="block text-sm/6 font-medium  px-1">
-            Tipo:
-          </label>
-          <Input
-            id="type"
-            type="text"
-            value={type}
-            onChange={handleChangeType}
-            className="border-2 bg-white border-gray-300 focus:outline-none focus:border-blue-300 rounded-xl py-1 px-2 font-bold text-gray-500"
-          />
-        </div>
-        <div className="flex flex-col">
-          <label htmlFor="status" className="block text-sm/6 font-medium  px-1">
-            Estado
-          </label>
-          <select
-            id="status"
-            value={status}
-            onChange={handleChangeStatus}
-            className="border-2 bg-white border-gray-300 focus:outline-none focus:border-blue-300 rounded-xl py-1 px-2 font-bold text-gray-500"
-          >
-            <option value=""></option>
-            <option value="alive">Vivo</option>
-            <option value="dead">Muerto</option>
-            <option value="unknown">Desconocida</option>
-          </select>
-        </div>
-        <Button
-          disabled={isLoading}
-          type="submit"
-          className="w-8 h-8 flex items-center justify-center rounded-xl cursor-pointer bg-blue-500 text-white font-bold disabled:bg-blue-300 disabled:cursor-not-allowed hover:bg-blue-600 transition-colors"
-        >
-          <MagnifyingGlassIcon className="size-6" />
-        </Button>
       </fieldset>
     </form>
   );

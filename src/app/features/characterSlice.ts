@@ -50,7 +50,16 @@ export const characterSlice = createSlice({
       state.isModalOpen = action.payload;
     },
     clearState: (state) => {
-      state = initialState;
+      state.page =0
+      state.count =0
+      state.pages= 0
+      state.next= null
+      state.prev= null
+      state.loading = false
+      state.error = null
+      state.characters = []
+      state.currentCharacter = null
+      state.isModalOpen = false
     },
   },
 });

@@ -1,13 +1,10 @@
 import { selectCharacter } from "@/app/features/characterSlice";
 import { useAppSelector } from "@/app/features/hooks";
 import { RootState } from "@/app/store";
-import useDispatchHandler from "@/hooks/useDispatchHandler";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 const useCharacterPaginator = () => {
-  //Usefull hooks
-  const { handleDispatch } = useDispatchHandler();
 
   //Paginator state
   const characterState = useAppSelector((state: RootState) =>
@@ -31,19 +28,9 @@ const useCharacterPaginator = () => {
   const handleNavigation = (page: number) => {
     if (!page || isOutOfRange(page)) return;
 
-    const callback = () => {
     params.set("page", String(page));
     setParams(params);
     setCurrentPage(page);
-  };
-
-  
-    const apiParams: Record<string, string | number> = { page };
-    params.forEach((value, key) => {
-      if (key !== "page") apiParams[key] = value;
-    });
-
-    handleDispatch({ params: apiParams, callback });
   };
 
   const handlePrevPage = () => prev && handleNavigation(page - 1);

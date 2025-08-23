@@ -1,6 +1,6 @@
 import { useGetCharactersMutation } from "@/app/features/charactersApi";
 import {
-  setCurrentCharacter,
+  clearState,
   setIsModalOpen,
   setCharacters,
   setCount,
@@ -30,16 +30,12 @@ const useDispatchHandler = () => {
     dispatch(setLoading(true));
 
     // Resetting state
-    dispatch(setError(""));
-    dispatch(setCurrentCharacter(null));
-    dispatch(setIsModalOpen(false));
-    dispatch(setCharacters([]));
-    dispatch(setPage(1))
+    dispatch(clearState());
 
     getCharacters({ ...params })
       .unwrap()
       .then(({ info: { count, next, pages, prev }, results }) => {
-        if (params.page) dispatch(setPage(Number(params.page)));
+        dispatch(setPage(Number(params.page || 1)));
         dispatch(setCount(count));
         dispatch(setNext(next));
         dispatch(setPages(pages));
@@ -47,7 +43,7 @@ const useDispatchHandler = () => {
         dispatch(setCharacters(results));
         callback();
       })
-      .catch((error) => dispatch(setError(error.message)))
+      .catch(({ data: { error } }) => dispatch(setError(error)))
       .finally(() => dispatch(setLoading(false)));
   };
 

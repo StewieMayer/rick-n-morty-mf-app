@@ -12,7 +12,8 @@ const useCharacterContainer = () => {
     selectCharacter(state)
   );
 
-  const { characters, currentCharacter, isModalOpen, loading } = characterState;
+  const { characters, currentCharacter, isModalOpen, loading, error } =
+    characterState;
 
   const onClose = () => handleToggle(isModalOpen);
 
@@ -21,7 +22,7 @@ const useCharacterContainer = () => {
     params.forEach((value, key) => (apiParams[key] = value));
 
     handleDispatch({ params: apiParams });
-  }, []);
+  }, [params]);
 
   return {
     onClose,
@@ -29,6 +30,7 @@ const useCharacterContainer = () => {
     isModalOpen,
     characters,
     loading,
+    error,
   };
 };
 
