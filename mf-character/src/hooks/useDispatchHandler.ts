@@ -27,10 +27,11 @@ const useDispatchHandler = () => {
     params,
     callback = () => {},
   }: UseDispatcherHandlerProps) => {
-    dispatch(setLoading(true));
-
+  
     // Resetting state
     dispatch(clearState());
+
+    dispatch(setLoading(true));
 
     getCharacters({ ...params })
       .unwrap()

@@ -11,8 +11,8 @@ const CharacterContainer: React.FC = () => {
     useCharacterContainer();
 
   return (
-    <div className="flex flex-1 flex-wrap overflow-hidden items-center justify-center gap-4 p-4">
-      {loading && <Loader />}
+    <div className="flex flex-1 flex-wrap overflow-hidden items-start justify-center gap-4 p-4">
+      {loading && <Loader message="Buscando..."/>}
       {error && <CharacterEmpty />}
 
       {characters &&
