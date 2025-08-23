@@ -24,7 +24,7 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
   });
   return (
     <div className={cardClass} onClick={handleClick}>
-      <div className="relative w-100 md:w-1/2">
+      <div className="relative w-full md:w-1/2">
         <img src={image} alt={name} className="w-full" />
         {full && (
           <div className="absolute top-0 right-0 flex items-center justify-end p-4 md:hidden">
