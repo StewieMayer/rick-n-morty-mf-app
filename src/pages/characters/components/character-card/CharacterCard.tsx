@@ -85,7 +85,7 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
         <div className="flex flex-col text-xl md:text-sm">
           <h3 className="font-bold text-gray-600">Origen: </h3>
           <Link
-            to="/"
+            to={`/locations/${origin.url.split("/").pop()}`}
             className="flex items-center font-semibold text-gray-500 hover:text-blue-500"
           >
             {origin.name}
@@ -95,7 +95,7 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
         <div className="flex flex-col text-xl md:text-sm">
           <h3 className="font-bold text-gray-600">Visto por ultima vez en: </h3>
           <Link
-            to="/"
+            to={`/locations/${location.url.split("/").pop()}`}
             className="flex items-center font-semibold text-gray-500 hover:text-blue-500"
           >
             {location.name}

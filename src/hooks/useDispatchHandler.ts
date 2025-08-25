@@ -1,4 +1,4 @@
-import { useGetCharactersMutation } from "@/app/features/charactersApi";
+import { useLazyGetCharactersQuery } from "@/app/features/charactersApi";
 import {
   clearState,
   setIsModalOpen,
@@ -21,7 +21,7 @@ interface UseDispatcherHandlerProps {
 
 const useDispatchHandler = () => {
   const dispatch = useAppDispatch();
-  const [getCharacters] = useGetCharactersMutation();
+  const [getCharacters] = useLazyGetCharactersQuery();
 
   const handleDispatch = ({
     params,
@@ -33,7 +33,7 @@ const useDispatchHandler = () => {
 
     dispatch(setLoading(true));
 
-    getCharacters({ ...params })
+    getCharacters(params)
       .unwrap()
       .then(({ info: { count, next, pages, prev }, results }) => {
         dispatch(setPage(Number(params.page || 1)));

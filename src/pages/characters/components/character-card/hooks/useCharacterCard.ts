@@ -48,7 +48,7 @@ export const useCharacterCard = ({
     dispatch(setIsModalOpen(false));
   };
 
-  const handleNavigate = () => navigate(`/character/${character.id}`);
+  const handleNavigate = () => navigate(`/${character.id}`);
 
   return {
     handleClick,
