@@ -1,15 +1,15 @@
-import { charactersApi } from "@/app/features/charactersApi";
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import character from "./features/characterSlice";
+import { baseApi } from "./features/baseApi";
 
 export const store = configureStore({
   reducer: {
-    [charactersApi.reducerPath]: charactersApi.reducer,
+    [baseApi.reducerPath]: baseApi.reducer,
     character
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(charactersApi.middleware),
+    getDefaultMiddleware().concat(baseApi.middleware),
 });
 
 setupListeners(store.dispatch);

@@ -1,32 +1,16 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { ResultData, CharactersApiProps } from "@/types/characterTypes";
+import { baseApi } from "./baseApi";
 
-export const charactersApi = createApi({
-  reducerPath: "charactersApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "https://rickandmortyapi.com/api/" }),
-  endpoints: (builder) => ({
-    getCharacters: builder.mutation<ResultData, CharactersApiProps>({
-      query: ({
-        page = 1,
-        name = "",
-        species = "",
-        status = "",
-        gender = "",
-        type = "",
-      }) => ({
-        url: "character/",
-        params: {
-          page,
-          name,
-          species,
-          status,
-          gender,
-          type,
-        },
+export const charactersApi = baseApi.injectEndpoints({
+  endpoints: (build) => ({
+    getCharacters: build.query<ResultData, CharactersApiProps>({
+      query: (params) => ({
+        url: "character",
         method: "GET",
+        params,
       }),
     }),
   }),
 });
 
-export const { useGetCharactersMutation } = charactersApi;
+export const { useLazyGetCharactersQuery } = charactersApi;
